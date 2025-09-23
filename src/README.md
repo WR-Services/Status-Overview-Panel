@@ -7,7 +7,13 @@ The main feature of the plugin is the visual representation of the component's s
 We achieve this with a large panel displaying the component's name, the display of all metrics or metrics influencing the status change, as well as a flashing effect when the status changes.
 Audio notifications are also planned for the future.
 
-More info on github [Status-Overview-Panel](https://github.com/serrrios/Status-Overview-Panel)
+## Key Features
+- Display the worst status of components based on various metrics
+- Per-rule unit formatting options for proper display of different data types
+- Enhanced field configuration for proper formatting of time-based metrics
+- Visual representation of status changes with flashing effects
+
+More info on GitHub [Status-Overview-Panel](https://github.com/WR-Services/Status-Overview-Panel)
 
 # Preview
-![Simple work](https://raw.githubusercontent.com/serrrios/Status-Overview-Panel/master/img/preview_transparent.png)
+![Simple work](https://raw.githubusercontent.com/WR-Services/Status-Overview-Panel/master/img/preview_transparent.png)

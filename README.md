@@ -13,11 +13,28 @@ This fork is maintained by Ferit Sari Tomé. The original plugin was created by 
 
 ### Enhancements in this fork
 - Added per-rule unit formatting options for proper display of different data types
-- Enhanced field configuration to leverage Grafana's built-in formatting system
+- Enhanced field configuration for better control over metric display formatting
 - Improved time display for time-based metrics
+- Added support for various unit formats (time, bytes, percentage, etc.)
+- Integrated formatting options directly within rule configuration
 
 # Preview
 ![Simple work](https://raw.githubusercontent.com/WR-Services/Status-Overview-Panel/master/img/preview_transparent.png)
+
+# Development
+
+## Setup & Deployment
+This repository includes VS Code tasks for easy development:
+
+1. **Build the plugin**: Run the "Build Plugin" task or use `npm run build`
+2. **Restart Docker**: Run the "Restart Docker" task or use `docker-compose down && docker-compose up -d`
+3. **Build and Deploy**: Run the combined "Build and Deploy" task or use the `deploy.ps1` script
+
+## Quick Start
+For the fastest development workflow:
+1. Press `Ctrl+Shift+P` to open the command palette
+2. Type "Tasks: Run Task" and select "Build and Deploy"
+3. Access Grafana at http://localhost:3000
 
 # Main Functionality
 - General
@@ -58,9 +75,17 @@ The plugin is designed to work with any data sources and has been tested with:
 If you encounter any issues with specific data sources, please leave an issue.
 
 # TODO
-- Select and display value types for metrics
 - Audio notifications
 - ~~Select metrics based on regular expressions~~ added in v0.0.4
+- ~~Select and display value types for metrics~~ added in v0.0.5
 - Additional plugin for global settings that affect all panels
+
+## Contributing
+
+To contribute to the plugin:
+1. Fork the repository from [GitHub](https://github.com/WR-Services/Status-Overview-Panel)
+2. Create a feature branch
+3. Make your changes following the existing code style
+4. Submit a pull request
 
 Use FR, any ideas for development are welcome.
