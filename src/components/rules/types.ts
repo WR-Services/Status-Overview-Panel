@@ -1,7 +1,14 @@
 
 import { SelectableValue } from '@grafana/data';
 
-export interface RuleMember {}
+export interface RuleMember { }
+
+export interface ThresholdItem {
+  name: string;        // The threshold name (e.g., "warning", "critical")
+  value: string;       // The threshold value as a string
+  color: string;       // The color for this threshold
+  order: number;       // The order of this threshold in severity (lower = less severe)
+}
 
 export const DisplayModes: SelectableValue[] = [
   { value: 'number', label: 'Number threshold' },
@@ -29,7 +36,8 @@ export interface RuleItemType {
   showRule: boolean;
   showMembers: boolean;
   showOnlyOnThreshold: boolean;
-  revers: boolean;  
+  revers: boolean;
+  // For backward compatibility
   numberThreshold: {
     information: string;
     minor: string;
@@ -39,6 +47,7 @@ export interface RuleItemType {
     critical: string;
     disaster: string;
   };
+  // For backward compatibility
   stringThreshold: {
     information: string;
     minor: string;
@@ -48,12 +57,15 @@ export interface RuleItemType {
     critical: string;
     disaster: string;
   };
+  // Dynamic thresholds
+  customThresholds?: ThresholdItem[];
+  useCustomThresholds?: boolean;
   clickThrough: string | '';
   clickThroughSanitize: boolean;
   clickThroughOpenNewTab: boolean;
   logicExpress: boolean;
   logicExpressValue: string;
-  logicalMode: string; 
+  logicalMode: string;
   seriesMatch: string | '';
   alias?: string | '';
   shortAlias?: string | '';
@@ -83,7 +95,7 @@ export interface RuleItemProps {
 }
 
 export interface RuleMetricItemProps {
-  
+
   index: number;
   disabled: boolean;
   removeMetric: any;

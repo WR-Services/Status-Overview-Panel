@@ -7,7 +7,7 @@ import { findWorstStatus } from './findWorstStatus';
 import { displaySeriesData } from './displaySeriesData';
 import { getColorByState } from './getColorByState';
 import { getMetricHints } from './getMetricHints';
-interface Props extends PanelProps<StatusOverviewOptions> {}
+interface Props extends PanelProps<StatusOverviewOptions> { }
 
 
 
@@ -32,7 +32,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
       valueMap: css`
         font-size: 0.85em;
         line-height: ${options.lineHeight || 1.5}em;
-      `,    
+      `,
       bottom_section: css`
         display: flex;
         flex-direction: column;
@@ -70,80 +70,80 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
       -webkit-animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
       -webkit-animation-duration: 1s;
       `,
-     
+
     };
   });
-  
-  
+
+
   const [state, setState] = useState<string | null>(null);
   const [blink, setBlink] = useState(false);
 
 
   const GlobalPanelState = useMemo(() => {
     return [];
-  }, []); 
+  }, []);
 
   useEffect(() => {
     setBlink(false);
-    if (options.statePanel === 'enable') { setState(findWorstStatus(getMetricHints(data), options.ruleConfig.rules )); }
+    if (options.statePanel === 'enable') { setState(findWorstStatus(getMetricHints(data), options.ruleConfig.rules)); }
     else if (options.statePanel === 'na') { setState('na-state') }
     else { setState('disable-state') }
   }, [data, options.ruleConfig.rules, options.statePanel]);
-  
+
 
   useEffect(() => {
     setBlink(false);
     if ((GlobalPanelState[id] !== 'not-ok-state') && state === 'ok-state') {
-			if (typeof GlobalPanelState[id] !== "undefined") {
-				setBlink(true);
-			}
+      if (typeof GlobalPanelState[id] !== "undefined") {
+        setBlink(true);
+      }
       // to be fix..
       // @ts-ignore
-			GlobalPanelState[id] = 'not-ok-state';   
-		} else if ((GlobalPanelState[id] !== 'not-disaster-state') && state === 'disaster-state') {
-			if (typeof GlobalPanelState[id] !== "undefined") {
-				setBlink(true);
-			}
+      GlobalPanelState[id] = 'not-ok-state';
+    } else if ((GlobalPanelState[id] !== 'not-disaster-state') && state === 'disaster-state') {
+      if (typeof GlobalPanelState[id] !== "undefined") {
+        setBlink(true);
+      }
       // to be fix..
       // @ts-ignore
-			GlobalPanelState[id] = 'not-disaster-state';
-		} else if ((GlobalPanelState[id] !== 'not-high-state') && state === 'high-state') {
-			if (typeof GlobalPanelState[id] !== "undefined") {
-				setBlink(true);
-			}
+      GlobalPanelState[id] = 'not-disaster-state';
+    } else if ((GlobalPanelState[id] !== 'not-high-state') && state === 'high-state') {
+      if (typeof GlobalPanelState[id] !== "undefined") {
+        setBlink(true);
+      }
       // to be fix..
       // @ts-ignore
-			GlobalPanelState[id] = 'not-high-state';
-		} else if ((GlobalPanelState[id] !== 'not-average-state') && state === 'average-state') {
-			if (typeof GlobalPanelState[id] !== "undefined") {
-				setBlink(true);
-			}
+      GlobalPanelState[id] = 'not-high-state';
+    } else if ((GlobalPanelState[id] !== 'not-average-state') && state === 'average-state') {
+      if (typeof GlobalPanelState[id] !== "undefined") {
+        setBlink(true);
+      }
       // to be fix..
       // @ts-ignore
-			GlobalPanelState[id] = 'not-average-state';
+      GlobalPanelState[id] = 'not-average-state';
     } else if ((GlobalPanelState[id] !== 'not-warning-state') && state === 'warning-state') {
-			if (typeof GlobalPanelState[id] !== "undefined") {
-				setBlink(true);
-			}
+      if (typeof GlobalPanelState[id] !== "undefined") {
+        setBlink(true);
+      }
       // to be fix..
       // @ts-ignore
-			GlobalPanelState[id] = 'not-warning-state';
+      GlobalPanelState[id] = 'not-warning-state';
     } else if ((GlobalPanelState[id] !== 'not-information-state') && state === 'information-state') {
-			if (typeof GlobalPanelState[id] !== "undefined") {
-				setBlink(true);
-			}
+      if (typeof GlobalPanelState[id] !== "undefined") {
+        setBlink(true);
+      }
       // to be fix..
       // @ts-ignore
-			GlobalPanelState[id] = 'not-information-state';  
-    }    
+      GlobalPanelState[id] = 'not-information-state';
+    }
   }, [id, state, GlobalPanelState]);
-  
+
 
   const blinkClass = blink && options.blink ? useStyles.blink : '';
   const backgroundColor = getColorByState(state ?? '', options);
   const [displayData, setDisplayData] = useState<Array<{ line: string; tooltip: string; }>>([]);
 
-  
+
   useEffect(() => {
     let result = displaySeriesData(getMetricHints(data), options.ruleConfig.rules);
     setDisplayData(result || []);
@@ -169,62 +169,62 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
         `
       )}
     >
-      <div className={useStyles.top_section }>	
+      <div className={useStyles.top_section}>
         <div className={useStyles.bottom_section}>
-	        <div className={useStyles.status_name_row}>
-	          <h1 style={useStyles.h1}>
-            {options.dataLink ? (
-              <a style={useStyles.a} href={replaceVariables(options.dataLink)}>
-                {replaceVariables(options.panelName)}
-              </a>
-            ) : (
-              <span style={useStyles.a}>{replaceVariables(options.panelName)}</span>
-            )}
-	          </h1>
-            {options.statePanel === 'enable' ? (
-            <div className={useStyles.valueMap}>
-              {options.modePanel && options.modePanel === 'in' ? (
-                displayData.map((item, index) => (
-                  <span key={index} style={{ marginRight: index < displayData.length - 1 ? `${options.inlineSpacing || 10}px` : '0' }}>
-                    {item.tooltip ? (
-                      <Tooltip content={<div style={{ whiteSpace: 'pre-wrap' }}>{item.tooltip}</div>}>
-                        <span>
-                         {item.line}
-                        </span>
-                      </Tooltip>
-                    ) : (
-                      <span>
-                        {item.line}
-                      </span>
-                    )}
-                    <span>
-                      {index < displayData.length - 1 ? ' / ' : ''}
-                    </span>
-                  </span>
-                ))
+          <div className={useStyles.status_name_row}>
+            <h1 style={useStyles.h1}>
+              {options.dataLink ? (
+                <a style={useStyles.a} href={replaceVariables(options.dataLink)}>
+                  {replaceVariables(options.panelName)}
+                </a>
               ) : (
-                displayData.map((item, index) => (
-                  <div key={index} style={{ marginBottom: `${options.textSpacing || 5}px` }}>
-                    {item.tooltip ? (
-                      <Tooltip content={<div style={{ whiteSpace: 'pre-wrap' }}>{item.tooltip}</div>}>
-                        <span>
-                         {item.line}
-                        </span>
-                      </Tooltip>
-                    ) : (
-                      <span>
-                        {item.line}
-                      </span>
-                    )}
-                  </div>
-                ))
+                <span style={useStyles.a}>{replaceVariables(options.panelName)}</span>
               )}
-            </div>
-            ) : '' }
-           </div>
+            </h1>
+            {options.statePanel === 'enable' ? (
+              <div className={useStyles.valueMap}>
+                {options.modePanel && options.modePanel === 'in' ? (
+                  displayData.map((item, index) => (
+                    <span key={index} style={{ marginRight: index < displayData.length - 1 ? `${options.inlineSpacing || 10}px` : '0' }}>
+                      {item.tooltip ? (
+                        <Tooltip content={<div style={{ whiteSpace: 'pre-wrap' }}>{item.tooltip}</div>}>
+                          <span>
+                            {item.line}
+                          </span>
+                        </Tooltip>
+                      ) : (
+                        <span>
+                          {item.line}
+                        </span>
+                      )}
+                      <span>
+                        {index < displayData.length - 1 ? ' / ' : ''}
+                      </span>
+                    </span>
+                  ))
+                ) : (
+                  displayData.map((item, index) => (
+                    <div key={index} style={{ marginBottom: `${options.textSpacing || 5}px` }}>
+                      {item.tooltip ? (
+                        <Tooltip content={<div style={{ whiteSpace: 'pre-wrap' }}>{item.tooltip}</div>}>
+                          <span>
+                            {item.line}
+                          </span>
+                        </Tooltip>
+                      ) : (
+                        <span>
+                          {item.line}
+                        </span>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            ) : ''}
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

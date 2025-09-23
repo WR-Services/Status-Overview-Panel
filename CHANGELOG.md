@@ -1,6 +1,16 @@
 # Changelog
 
-## [v0.0.5] (dev-release)
+## [v0.0.7] (dev-release)
+
+Released at 23-09-2025
+
+### Fixed
+
+- Fixed JSX syntax issues in ThresholdEditor.tsx
+- Fixed RuleItem.tsx component structure
+- Added missing properties in RuleEditor.tsx to match interface requirements
+
+## [v0.0.6] (dev-release)
 
 Released at 23-09-2025
 

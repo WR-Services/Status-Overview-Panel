@@ -16,12 +16,12 @@ export interface RuleEditorSettings {
   animationSpeed: string;
 }
 
-interface Props extends StandardEditorProps<string | string[] | null, RuleEditorSettings> {}
+interface Props extends StandardEditorProps<string | string[] | null, RuleEditorSettings> { }
 
 
 export const RuleEditor: React.FC<Props> = ({ context, onChange }) => {
   const [settings] = useState(context.options.ruleConfig);
-//  const [rulesEnabled, _setRulesEnabled] = useState(context.options.ruleConfig.enabled);
+  //  const [rulesEnabled, _setRulesEnabled] = useState(context.options.ruleConfig.enabled);
   const [tracker, _setTracker] = useState((): RuleItemTracker[] => {
     if (!settings.rules) {
       const empty: RuleItemTracker[] = [];
@@ -131,7 +131,7 @@ export const RuleEditor: React.FC<Props> = ({ context, onChange }) => {
       // Copy formatting options
       useCustomFormatting: original.useCustomFormatting,
       unitFormat: original.unitFormat,
-      decimals: original.decimals,      
+      decimals: original.decimals,
     };
     const aTracker: RuleItemTracker = {
       rule: aRule,
@@ -161,7 +161,7 @@ export const RuleEditor: React.FC<Props> = ({ context, onChange }) => {
     allRules.splice(removeIndex, 1);
     // reorder
     //for (let i = 0; i < allRules.length; i++) {
-    for (let i = 0; i < allRules.length; i++) {  
+    for (let i = 0; i < allRules.length; i++) {
       allRules[i].order = i;
       allRules[i].rule.order = i;
     }
@@ -183,19 +183,23 @@ export const RuleEditor: React.FC<Props> = ({ context, onChange }) => {
       showValue: true,
       showMembers: false,
       showOnlyOnThreshold: false,
-      revers: false,      
+      revers: false,
       numberThreshold: {
         information: '',
+        minor: '',
         warning: '',
         average: '',
         high: '',
+        critical: '',
         disaster: '',
       },
       stringThreshold: {
         information: '',
+        minor: '',
         warning: '',
         average: '',
         high: '',
+        critical: '',
         disaster: '',
       },
       logicExpress: false,

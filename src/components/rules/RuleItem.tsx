@@ -8,6 +8,7 @@ import { DisplayModes, LogicalModes, RuleItemProps, RuleItemType } from './types
 import { DataFrameToMetrics } from '../processor'
 import { SelectableValue, FieldType } from '@grafana/data';
 import { UnitFormatOptions } from './unitFormats';
+import { ThresholdEditor } from './ThresholdEditor';
 
 export interface MetricsModel {
   name: string;
@@ -15,7 +16,7 @@ export interface MetricsModel {
 }
 
 export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
-//  export const RuleItem: React.FC<Props> = ({data, options}) => {
+  //  export const RuleItem: React.FC<Props> = ({data, options}) => {
   const [metricHints, setMetricHints] = useState<CascaderOption[]>([]);
   const [rule, _setRule] = useState(props.rule);
   const getDisplayMode = (displayMode: string) => {
@@ -29,7 +30,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
     return DisplayModes[0];
   };
   const [displayMode, setDisplayMode] = useState<SelectableValue<any>>(getDisplayMode(props.rule.displayMode));
-  
+
   const getLogicalMode = (logicalMode: string) => {
     const keys = LogicalModes.keys();
     for (const aKey of keys) {
@@ -41,7 +42,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
     return LogicalModes[0];
   };
   const [logicalMode, setLogicalMode] = useState<SelectableValue<any>>(getLogicalMode(props.rule.logicalMode));
-//  const [logicalMode, setLogicalMode] = useState<string>(getLogicalMode(props.rule.logicalMode).value);
+  //  const [logicalMode, setLogicalMode] = useState<string>(getLogicalMode(props.rule.logicalMode).value);
   const setRule = (value: RuleItemType) => {
     _setRule(value);
     props.setter(rule.order, value);
@@ -82,7 +83,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
       let hints: CascaderOption[] = [];
       let metricHints = new Set<string>();
       let fieldTypeMap = new Map<string, string>();
-      
+
       for (const metric of props.context.data) {
         let hintsValue = DataFrameToMetrics(metric, 'last');
         for (const hintValue of hintsValue) {
@@ -91,14 +92,14 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
           if (hintValue.fieldType) {
             fieldTypeMap.set(hintValue.name, hintValue.fieldType);
           }
-        }  
+        }
       }
-      
+
       for (const metricName of metricHints) {
         const fieldType = fieldTypeMap.get(metricName) || 'unknown';
         // Add field type information to the label
         let fieldTypeLabel = '';
-        
+
         if (fieldType === FieldType.time) {
           fieldTypeLabel = ' (time)';
         } else if (fieldType === FieldType.number) {
@@ -106,7 +107,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
         } else if (fieldType === FieldType.string) {
           fieldTypeLabel = ' (string)';
         }
-        
+
         hints.push({
           label: `${metricName}${fieldTypeLabel}`,
           value: metricName,
@@ -114,11 +115,11 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
       }
       setMetricHints(hints);
     }
-  }, [props.context.data ]);
+  }, [props.context.data]);
 
   return (
     <Card heading="" key={`rule-card-${props.ID}`}>
-      <Card.Meta>        
+      <Card.Meta>
         <FieldSet>
           <Field label="Rule Name" disabled={!rule.showRule}>
             <Input
@@ -136,7 +137,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               allowCustomValue
               placeholder="Сhoose a metric or enter a regular expression"
               options={metricHints}
-              onSelect={(val: string) => setRule({ ...rule, seriesMatch: val })} 
+              onSelect={(val: string) => setRule({ ...rule, seriesMatch: val })}
             />
           </Field>
           <Field label="Alias metric name" description="Used as metric name if exists">
@@ -155,7 +156,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               disabled={!rule.showRule}
               onChange={(e) => setRule({ ...rule, description: e.currentTarget.value })}
             />
-          </Field> 
+          </Field>
           <Field label="Show metric name" description="Toggle Display of metric name" disabled={!rule.showRule}>
             <Switch
               transparent={true}
@@ -173,7 +174,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
             />
           </Field>
 
-          
+
           <Field
             label="Display Mode"
             description="Metric handler type"
@@ -189,150 +190,186 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               options={DisplayModes}
             />
           </Field>
-          { rule.displayMode === 'number' ? (
-          <>
-          <Field
-            label="Show only on Threshold"
-            disabled={!rule.showRule}
-          >
-            <Switch
-              transparent={true}
-              value={rule.showOnlyOnThreshold}
-              disabled={!rule.showRule}
-              onChange={() => setRule({ ...rule, showOnlyOnThreshold: !rule.showOnlyOnThreshold, }, )}
-            />
-          </Field> 
-          <Field
-            label="Revers logic"
-            description="Inverse processing of values, if processing is needed from the largest to the smallest."
-            disabled={!rule.showRule}
-          >
-            <Switch
-              transparent={true}
-              value={rule.revers}
-              disabled={!rule.showRule}
-              onChange={() => setRule({ ...rule, revers: !rule.revers, }, )}
-            />
-          </Field> 
-          <Field label="Information threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.information?.toString() ?? ''}
-              placeholder="1"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, information: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.information ?? null,  }, }) }
-            />
-          </Field>
-          <Field label="Minor threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.minor?.toString() ?? ''}
-              placeholder="1.5"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, minor: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.minor ?? null,  }, }) }
-            />
-          </Field>
-          <Field label="Warning threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.warning?.toString() ?? ''}
-              placeholder="2"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, warning: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.warning ?? null,  }, }) }
-            />
-          </Field>                    
-          <Field label="Average threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.average?.toString() ?? ''}
-              placeholder="3"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, average: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.average ?? null,  }, }) }
-            />
-          </Field>
-          <Field label="High threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.high?.toString() ?? ''}
-              placeholder="4"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, high: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.high ?? null,  }, }) }
-            />
-          </Field>
-          <Field label="Critical threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.critical?.toString() ?? ''}
-              placeholder="4.5"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, critical: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.critical ?? null,  }, }) }
-            />
-          </Field>
-          <Field label="Disaster threshold" disabled={!rule.showRule}>
-            <Input
-              value={rule.numberThreshold?.disaster ?? ''}
-              placeholder="5"
-              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, disaster: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.disaster ?? null, }, }) }
-              type="text"
-              onKeyDown={ e => ( e.keyCode === 69 || e.keyCode === 190 ) && e.preventDefault() }
-            />
-          </Field>
-          </>  
-          ) : null }
-          { rule.displayMode === 'string' ? (
-          <>
-          <Field
-            label="Show only on Threshold"
-            disabled={!rule.showRule}
-          >
-            <Switch
-              transparent={true}
-              value={rule.showOnlyOnThreshold}
-              disabled={!rule.showRule}
-              onChange={() => setRule({ ...rule, showOnlyOnThreshold: !rule.showOnlyOnThreshold, }, )}
-            />
-          </Field>  
+          {rule.displayMode === 'number' ? (
+            <>
+              <Field
+                label="Show only on Threshold"
+                disabled={!rule.showRule}
+              >
+                <Switch
+                  transparent={true}
+                  value={rule.showOnlyOnThreshold}
+                  disabled={!rule.showRule}
+                  onChange={() => setRule({ ...rule, showOnlyOnThreshold: !rule.showOnlyOnThreshold, },)}
+                />
+              </Field>
+              <Field
+                label="Revers logic"
+                description="Inverse processing of values, if processing is needed from the largest to the smallest."
+                disabled={!rule.showRule}
+              >
+                <Switch
+                  transparent={true}
+                  value={rule.revers}
+                  disabled={!rule.showRule}
+                  onChange={() => setRule({ ...rule, revers: !rule.revers, },)}
+                />
+              </Field>          <Field label="Use Custom Thresholds" description="Define your own set of thresholds" disabled={!rule.showRule}>
+                <Switch
+                  transparent={true}
+                  value={rule.useCustomThresholds || false}
+                  disabled={!rule.showRule}
+                  onChange={() => {
+                    // Initialize custom thresholds if they don't exist
+                    let customThresholds = rule.customThresholds;
+                    if (!customThresholds || customThresholds.length === 0) {
+                      customThresholds = [
+                        { name: 'information', value: '1', color: '#8ab8ff', order: 0 },
+                        { name: 'warning', value: '2', color: '#e0b400', order: 1 },
+                        { name: 'average', value: '3', color: '#fa6400', order: 2 },
+                        { name: 'high', value: '4', color: '#d95c1d', order: 3 },
+                        { name: 'disaster', value: '5', color: '#c4162a', order: 4 },
+                      ];
+                    }
+                    setRule({
+                      ...rule,
+                      useCustomThresholds: !rule.useCustomThresholds,
+                      customThresholds: customThresholds
+                    });
+                  }}
+                />
+              </Field>
 
-          <Field label="Information threshold" disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.information}
-              placeholder="Information"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, information: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          <Field label="Minor threshold" disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.minor}
-              placeholder="Minor"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, minor: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          <Field label="Warning threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.warning}
-              placeholder="Warning"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, warning: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          <Field label="Average threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.average}
-              placeholder="Average"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, average: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          <Field label="High threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.high}
-              placeholder="High"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, high: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          <Field label="Critical threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.critical}
-              placeholder="Critical"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, critical: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          <Field label="Disaster threshold"  disabled={!rule.showRule}>
-            <Input
-              value={rule.stringThreshold?.disaster}
-              placeholder="Disaster"
-              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, disaster: e.currentTarget.value, }, }) }
-            />
-          </Field>
-          </>  
-          ) : null }
-          { rule.displayMode === 'show' ? (
+              {rule.useCustomThresholds ? (
+                <ThresholdEditor
+                  thresholds={rule.customThresholds || []}
+                  onChange={(updatedThresholds) => {
+                    setRule({ ...rule, customThresholds: updatedThresholds });
+                  }}
+                />
+              ) : (
+                <>
+                  <Field label="Information threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.information?.toString() ?? ''}
+                      placeholder="1"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, information: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.information ?? null, }, })}
+                    />
+                  </Field>
+                  <Field label="Minor threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.minor?.toString() ?? ''}
+                      placeholder="1.5"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, minor: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.minor ?? null, }, })}
+                    />
+                  </Field>
+                  <Field label="Warning threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.warning?.toString() ?? ''}
+                      placeholder="2"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, warning: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.warning ?? null, }, })}
+                    />
+                  </Field>
+                  <Field label="Average threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.average?.toString() ?? ''}
+                      placeholder="3"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, average: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.average ?? null, }, })}
+                    />
+                  </Field>
+                  <Field label="High threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.high?.toString() ?? ''}
+                      placeholder="4"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, high: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.high ?? null, }, })}
+                    />
+                  </Field>
+                  <Field label="Critical threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.critical?.toString() ?? ''}
+                      placeholder="4.5"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, critical: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.critical ?? null, }, })}
+                    />
+                  </Field>
+                  <Field label="Disaster threshold" disabled={!rule.showRule}>
+                    <Input
+                      value={rule.numberThreshold?.disaster ?? ''}
+                      placeholder="5"
+                      onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, disaster: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.disaster ?? null, }, })}
+                      type="text"
+                      onKeyDown={e => (e.keyCode === 69 || e.keyCode === 190) && e.preventDefault()}
+                    />
+                  </Field>
+                </>
+              )}
+            </>
+          ) : null}
+          {rule.displayMode === 'string' ? (
+            <>
+              <Field
+                label="Show only on Threshold"
+                disabled={!rule.showRule}
+              >
+                <Switch
+                  transparent={true}
+                  value={rule.showOnlyOnThreshold}
+                  disabled={!rule.showRule}
+                  onChange={() => setRule({ ...rule, showOnlyOnThreshold: !rule.showOnlyOnThreshold, },)}
+                />
+              </Field>
+
+              <Field label="Information threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.information}
+                  placeholder="Information"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, information: e.currentTarget.value, }, })}
+                />
+              </Field>
+              <Field label="Minor threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.minor}
+                  placeholder="Minor"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, minor: e.currentTarget.value, }, })}
+                />
+              </Field>
+              <Field label="Warning threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.warning}
+                  placeholder="Warning"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, warning: e.currentTarget.value, }, })}
+                />
+              </Field>
+              <Field label="Average threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.average}
+                  placeholder="Average"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, average: e.currentTarget.value, }, })}
+                />
+              </Field>
+              <Field label="High threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.high}
+                  placeholder="High"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, high: e.currentTarget.value, }, })}
+                />
+              </Field>
+              <Field label="Critical threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.critical}
+                  placeholder="Critical"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, critical: e.currentTarget.value, }, })}
+                />
+              </Field>
+              <Field label="Disaster threshold" disabled={!rule.showRule}>
+                <Input
+                  value={rule.stringThreshold?.disaster}
+                  placeholder="Disaster"
+                  onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, disaster: e.currentTarget.value, }, })}
+                />
+              </Field>
+            </>
+          ) : null}
+          {rule.displayMode === 'show' ? (
             <>
               <Field label="Use logical expressions" disabled={!rule.showRule}>
                 <Switch
@@ -342,8 +379,8 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
                   onChange={() => setRule({ ...rule, logicExpress: !rule.logicExpress })}
                 ></Switch>
               </Field>
-            
-              { rule.logicExpress ? (
+
+              {rule.logicExpress ? (
                 <>
                   <Field
                     label="Logical Mode"
@@ -363,14 +400,14 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
                     <Input
                       value={rule.logicExpressValue}
                       placeholder="100500"
-                      onChange={(e) => setRule({ ...rule, logicExpressValue: e.currentTarget.value }) }
+                      onChange={(e) => setRule({ ...rule, logicExpressValue: e.currentTarget.value })}
                     />
                   </Field>
                 </>
-              ) : null }
+              ) : null}
             </>
-          ) : null }
- 
+          ) : null}
+
           {/* Field Formatting Options */}
           <Field label="Use Custom Formatting" description="Apply custom formatting to this metric" disabled={!rule.showRule}>
             <Switch
@@ -409,7 +446,7 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
             </>
           ) : null}
 
-        </FieldSet>          
+        </FieldSet>
       </Card.Meta>
       <Card.Actions>
         <IconButton key="moveUp" name="arrow-up" tooltip="Move Up" onClick={moveUp} />

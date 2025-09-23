@@ -11,22 +11,22 @@ export function findWorstStatus(metricHints: MetricHint[], rules: RuleItemType[]
     let series;
     for (const hint of metricHints) {
       //if (hint.label === rule.seriesMatch) {
-      if (new RegExp(rule.seriesMatch).test(hint.label)) {  
+      if (new RegExp(rule.seriesMatch).test(hint.label)) {
         series = hint;
         //break;
-        if (!series) {continue;}
+        if (!series) { continue; }
         const value = series.value;
         if (rule.displayMode === 'number' && rule.numberThreshold) {
           for (const [status, threshold] of Object.entries(rule.numberThreshold)) {
             if (threshold !== null) {
-              if (status === 'showOnlyOnThreshold') {continue;}
-              if (typeof value === 'number' && ( rule.revers ? (value <= parseFloat(threshold)) : (value >= parseFloat(threshold)))) {
+              if (status === 'showOnlyOnThreshold') { continue; }
+              if (typeof value === 'number' && (rule.revers ? (value <= parseFloat(threshold)) : (value >= parseFloat(threshold)))) {
                 const statusIndex = statusOrder.indexOf(status);
                 if (statusIndex > worstStatusIndex) {
                   worstStatusIndex = statusIndex;
                 }
               }
-            }  
+            }
           }
         } else if (rule.displayMode === 'string' && rule.stringThreshold) {
           for (const [status, statusValue] of Object.entries(rule.stringThreshold)) {
@@ -40,7 +40,7 @@ export function findWorstStatus(metricHints: MetricHint[], rules: RuleItemType[]
         }
       }
     }
-   
+
 
   }
   return worstStatusIndex >= 0 ? statusOrder[worstStatusIndex] + '-state' : 'ok-state';
