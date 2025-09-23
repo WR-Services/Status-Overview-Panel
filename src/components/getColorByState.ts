@@ -1,6 +1,26 @@
 
-export function getColorByState(state: string, options: any) {
-  switch (state) {
+interface ColorResult {
+  backgroundColor: string;
+  textColor?: string;
+}
+
+export function getColorByState(state: string | { state: string; customColor?: string; textColor?: string }, options: any): string | ColorResult {
+  // If state is an object with custom color, use it
+  if (typeof state === 'object') {
+    if (state.customColor && state.textColor) {
+      return {
+        backgroundColor: state.customColor,
+        textColor: state.textColor
+      };
+    } else if (state.customColor) {
+      return state.customColor;
+    }
+  }
+
+  // Otherwise, get the state string and use standard colors
+  const stateStr = typeof state === 'object' ? state.state : state;
+
+  switch (stateStr) {
     case 'ok-state':
       return options.ColorOK;
     case 'disaster-state':

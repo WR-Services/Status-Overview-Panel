@@ -9,11 +9,24 @@ import { getColorByState } from './getColorByState';
 import { getMetricHints } from './getMetricHints';
 interface Props extends PanelProps<StatusOverviewOptions> { }
 
-
-
 export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, height, id, replaceVariables }) => {
+  // State declarations
+  const [state, setState] = useState<string | { state: string; customColor?: string; textColor?: string } | null>(null);
+  const [blink, setBlink] = useState(false);
+  const [displayData, setDisplayData] = useState<Array<{ line: string; tooltip: string; }>>([]);
 
-  const useStyles = useStyles2(() => {
+  // Global panel state for tracking state changes
+  const GlobalPanelState = useMemo(() => {
+    return [];
+  }, []);
+
+  // Get color information based on the current state
+  const colorResult = getColorByState(state ?? '', options);
+  const backgroundColor = typeof colorResult === 'string' ? colorResult : colorResult.backgroundColor;
+  const textColor = typeof colorResult === 'string' ? undefined : colorResult.textColor;
+
+  // Define styles after we have the variables we need
+  const useStyles = useStyles2((theme) => {
     return {
       wrapper: css`
         position: relative;
@@ -46,8 +59,8 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
         height: 100%;
       `,
       status_name_row: css`
-        color: #080808;
-        overflow:hidden;
+        overflow: hidden;
+        color: ${textColor || '#080808'};
       `,
       h1: {
         margin: `0px 0px ${options.titleMargin || 10}px`,
@@ -56,7 +69,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
         'letter-spacing': '-0.01893em',
       },
       a: {
-        color: '#080808',
+        color: textColor || '#080808',
       },
       blink: css`
       animation-name: blinker;
@@ -70,80 +83,72 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
       -webkit-animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
       -webkit-animation-duration: 1s;
       `,
-
     };
   });
 
-
-  const [state, setState] = useState<string | null>(null);
-  const [blink, setBlink] = useState(false);
-
-
-  const GlobalPanelState = useMemo(() => {
-    return [];
-  }, []);
-
+  // Effect to update the state based on metric values
   useEffect(() => {
     setBlink(false);
-    if (options.statePanel === 'enable') { setState(findWorstStatus(getMetricHints(data), options.ruleConfig.rules)); }
-    else if (options.statePanel === 'na') { setState('na-state') }
-    else { setState('disable-state') }
+    if (options.statePanel === 'enable') {
+      setState(findWorstStatus(getMetricHints(data), options.ruleConfig.rules));
+    }
+    else if (options.statePanel === 'na') {
+      setState('na-state')
+    }
+    else {
+      setState('disable-state')
+    }
   }, [data, options.ruleConfig.rules, options.statePanel]);
 
-
+  // Effect to handle blinking when states change
   useEffect(() => {
     setBlink(false);
-    if ((GlobalPanelState[id] !== 'not-ok-state') && state === 'ok-state') {
+    // Get the state string regardless of whether state is a string or an object
+    const stateStr = state === null ? null : (typeof state === 'object' ? state.state : state);
+
+    if ((GlobalPanelState[id] !== 'not-ok-state') && stateStr === 'ok-state') {
       if (typeof GlobalPanelState[id] !== "undefined") {
         setBlink(true);
       }
-      // to be fix..
       // @ts-ignore
       GlobalPanelState[id] = 'not-ok-state';
-    } else if ((GlobalPanelState[id] !== 'not-disaster-state') && state === 'disaster-state') {
+    } else if ((GlobalPanelState[id] !== 'not-disaster-state') && stateStr === 'disaster-state') {
       if (typeof GlobalPanelState[id] !== "undefined") {
         setBlink(true);
       }
-      // to be fix..
       // @ts-ignore
       GlobalPanelState[id] = 'not-disaster-state';
-    } else if ((GlobalPanelState[id] !== 'not-high-state') && state === 'high-state') {
+    } else if ((GlobalPanelState[id] !== 'not-high-state') && stateStr === 'high-state') {
       if (typeof GlobalPanelState[id] !== "undefined") {
         setBlink(true);
       }
-      // to be fix..
       // @ts-ignore
       GlobalPanelState[id] = 'not-high-state';
-    } else if ((GlobalPanelState[id] !== 'not-average-state') && state === 'average-state') {
+    } else if ((GlobalPanelState[id] !== 'not-average-state') && stateStr === 'average-state') {
       if (typeof GlobalPanelState[id] !== "undefined") {
         setBlink(true);
       }
-      // to be fix..
       // @ts-ignore
       GlobalPanelState[id] = 'not-average-state';
-    } else if ((GlobalPanelState[id] !== 'not-warning-state') && state === 'warning-state') {
+    } else if ((GlobalPanelState[id] !== 'not-warning-state') && stateStr === 'warning-state') {
       if (typeof GlobalPanelState[id] !== "undefined") {
         setBlink(true);
       }
-      // to be fix..
       // @ts-ignore
       GlobalPanelState[id] = 'not-warning-state';
-    } else if ((GlobalPanelState[id] !== 'not-information-state') && state === 'information-state') {
+    } else if ((GlobalPanelState[id] !== 'not-information-state') && stateStr === 'information-state') {
       if (typeof GlobalPanelState[id] !== "undefined") {
         setBlink(true);
       }
-      // to be fix..
       // @ts-ignore
       GlobalPanelState[id] = 'not-information-state';
     }
   }, [id, state, GlobalPanelState]);
 
-
+  // Calculate the class for blinking effect
   const blinkClass = blink && options.blink ? useStyles.blink : '';
-  const backgroundColor = getColorByState(state ?? '', options);
-  const [displayData, setDisplayData] = useState<Array<{ line: string; tooltip: string; }>>([]);
 
-
+  // Effect to update the display data
   useEffect(() => {
     let result = displaySeriesData(getMetricHints(data), options.ruleConfig.rules);
     setDisplayData(result || []);
@@ -165,7 +170,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
           backface-visibility: hidden;
           transition: transform 0.5s;
 	        margin: -8px 0 0 -8px;
-          background-color: ${backgroundColor}};
+          background-color: ${backgroundColor};
         `
       )}
     >

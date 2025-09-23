@@ -6,7 +6,8 @@ export interface RuleMember { }
 export interface ThresholdItem {
   name: string;        // The threshold name (e.g., "warning", "critical")
   value: string;       // The threshold value as a string
-  color: string;       // The color for this threshold
+  color: string;       // The background color for this threshold
+  textColor?: string;  // The text color for this threshold
   order: number;       // The order of this threshold in severity (lower = less severe)
 }
 

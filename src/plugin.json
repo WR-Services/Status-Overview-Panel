@@ -1,11 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
   "type": "panel",
-  "name": "Status Overview Panel",
+  "name": "Status Overview Panel 2",
   "id": "wrservices-statusoverview-panel",
   "info": {
-    "keywords": ["panel"],
-    "description": "Status Overview Panel for Grafana - Fork of serrrios plugin with enhanced formatting features. Original author: Krasnov Sergei.",
+    "keywords": [
+      "panel"
+    ],
+    "description": "Status Overview Panel 2 for Grafana - Fork of serrrios plugin with enhanced formatting features. Original author: Krasnov Sergei.",
     "author": {
       "name": "Ferit Sari Tomé",
       "url": "https://github.com/WR-Services"
@@ -14,20 +16,26 @@
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [{
-      "name": "Project site",
-      "url": "https://github.com/WR-Services/Status-Overview-Panel"
-    }, {
-      "name": "Original project",
-      "url": "https://github.com/serrrios/Status-Overview-Panel"
-    }],
-    "screenshots": [{
-      "name": "Preview",
-      "path": "img/preview_transparent.png"
-    }, {
-      "name": "Blink",
-      "path": "img/blink.gif"
-    }],
+    "links": [
+      {
+        "name": "Project site",
+        "url": "https://github.com/WR-Services/Status-Overview-Panel"
+      },
+      {
+        "name": "Original project",
+        "url": "https://github.com/serrrios/Status-Overview-Panel"
+      }
+    ],
+    "screenshots": [
+      {
+        "name": "Preview",
+        "path": "img/preview_transparent.png"
+      },
+      {
+        "name": "Blink",
+        "path": "img/blink.gif"
+      }
+    ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },

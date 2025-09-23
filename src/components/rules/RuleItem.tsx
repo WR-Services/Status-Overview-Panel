@@ -224,11 +224,11 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
                     let customThresholds = rule.customThresholds;
                     if (!customThresholds || customThresholds.length === 0) {
                       customThresholds = [
-                        { name: 'information', value: '1', color: '#8ab8ff', order: 0 },
-                        { name: 'warning', value: '2', color: '#e0b400', order: 1 },
-                        { name: 'average', value: '3', color: '#fa6400', order: 2 },
-                        { name: 'high', value: '4', color: '#d95c1d', order: 3 },
-                        { name: 'disaster', value: '5', color: '#c4162a', order: 4 },
+                        { name: 'information', value: '1', color: '#8ab8ff', textColor: '#000000', order: 0 },
+                        { name: 'warning', value: '2', color: '#e0b400', textColor: '#000000', order: 1 },
+                        { name: 'average', value: '3', color: '#fa6400', textColor: '#000000', order: 2 },
+                        { name: 'high', value: '4', color: '#d95c1d', textColor: '#ffffff', order: 3 },
+                        { name: 'disaster', value: '5', color: '#c4162a', textColor: '#ffffff', order: 4 },
                       ];
                     }
                     setRule({

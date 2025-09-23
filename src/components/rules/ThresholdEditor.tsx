@@ -21,10 +21,9 @@ export const ThresholdEditor: React.FC<ThresholdEditorProps> = ({ thresholds, on
             name: `threshold${nextOrder}`,
             value: '',
             color: 'rgb(50, 116, 217)',
+            textColor: '#ffffff', // Default to white text
             order: nextOrder,
-        };
-
-        onChange([...thresholds, newThreshold]);
+        }; onChange([...thresholds, newThreshold]);
     };
 
     const removeThreshold = (index: number) => {
@@ -78,10 +77,20 @@ export const ThresholdEditor: React.FC<ThresholdEditorProps> = ({ thresholds, on
                                 onChange={e => updateThreshold(index, 'value', e.currentTarget.value)}
                                 width={15}
                             />
-                            <ColorPicker
-                                color={threshold.color}
-                                onChange={color => updateThreshold(index, 'color', color)}
-                            />
+                            <div className={styles.colorPickerContainer}>
+                                <label>Background:</label>
+                                <ColorPicker
+                                    color={threshold.color}
+                                    onChange={color => updateThreshold(index, 'color', color)}
+                                />
+                            </div>
+                            <div className={styles.colorPickerContainer}>
+                                <label>Text:</label>
+                                <ColorPicker
+                                    color={threshold.textColor || '#080808'}
+                                    onChange={color => updateThreshold(index, 'textColor', color)}
+                                />
+                            </div>
                             <IconButton name="arrow-up" onClick={() => moveThreshold(index, 'up')} />
                             <IconButton name="arrow-down" onClick={() => moveThreshold(index, 'down')} />
                             <IconButton name="trash-alt" onClick={() => removeThreshold(index)} />
@@ -115,6 +124,16 @@ const getStyles = (theme: GrafanaTheme2) => {
     `,
         addButton: css`
       margin-top: ${theme.spacing(1)};
+    `,
+        colorPickerContainer: css`
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      
+      label {
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+      }
     `,
     };
 };

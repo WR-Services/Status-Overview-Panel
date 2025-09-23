@@ -9,6 +9,12 @@ Released at 23-09-2025
 - Fixed JSX syntax issues in ThresholdEditor.tsx
 - Fixed RuleItem.tsx component structure
 - Added missing properties in RuleEditor.tsx to match interface requirements
+- Fixed custom thresholds not triggering in status evaluation
+- Added support for custom colors from custom thresholds
+
+### Added
+
+- Added ability to customize text color alongside background color in custom thresholds
 
 ## [v0.0.6] (dev-release)
 
