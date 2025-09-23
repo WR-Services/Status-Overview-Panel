@@ -221,6 +221,13 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, information: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.information ?? null,  }, }) }
             />
           </Field>
+          <Field label="Minor threshold"  disabled={!rule.showRule}>
+            <Input
+              value={rule.numberThreshold?.minor?.toString() ?? ''}
+              placeholder="1.5"
+              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, minor: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.minor ?? null,  }, }) }
+            />
+          </Field>
           <Field label="Warning threshold"  disabled={!rule.showRule}>
             <Input
               value={rule.numberThreshold?.warning?.toString() ?? ''}
@@ -240,6 +247,13 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               value={rule.numberThreshold?.high?.toString() ?? ''}
               placeholder="4"
               onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, high: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.high ?? null,  }, }) }
+            />
+          </Field>
+          <Field label="Critical threshold"  disabled={!rule.showRule}>
+            <Input
+              value={rule.numberThreshold?.critical?.toString() ?? ''}
+              placeholder="4.5"
+              onChange={(e) => setRule({ ...rule, numberThreshold: { ...rule.numberThreshold, critical: e.currentTarget.value.match(/^[\d.]*$/) ? e.currentTarget.value : rule.numberThreshold?.critical ?? null,  }, }) }
             />
           </Field>
           <Field label="Disaster threshold" disabled={!rule.showRule}>
@@ -274,6 +288,13 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, information: e.currentTarget.value, }, }) }
             />
           </Field>
+          <Field label="Minor threshold" disabled={!rule.showRule}>
+            <Input
+              value={rule.stringThreshold?.minor}
+              placeholder="Minor"
+              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, minor: e.currentTarget.value, }, }) }
+            />
+          </Field>
           <Field label="Warning threshold"  disabled={!rule.showRule}>
             <Input
               value={rule.stringThreshold?.warning}
@@ -293,6 +314,13 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
               value={rule.stringThreshold?.high}
               placeholder="High"
               onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, high: e.currentTarget.value, }, }) }
+            />
+          </Field>
+          <Field label="Critical threshold"  disabled={!rule.showRule}>
+            <Input
+              value={rule.stringThreshold?.critical}
+              placeholder="Critical"
+              onChange={(e) => setRule({ ...rule, stringThreshold: { ...rule.stringThreshold, critical: e.currentTarget.value, }, }) }
             />
           </Field>
           <Field label="Disaster threshold"  disabled={!rule.showRule}>

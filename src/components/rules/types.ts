@@ -32,16 +32,20 @@ export interface RuleItemType {
   revers: boolean;  
   numberThreshold: {
     information: string;
+    minor: string;
     warning: string;
     average: string;
     high: string;
+    critical: string;
     disaster: string;
   };
   stringThreshold: {
     information: string;
+    minor: string;
     warning: string;
     average: string;
     high: string;
+    critical: string;
     disaster: string;
   };
   clickThrough: string | '';

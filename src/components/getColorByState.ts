@@ -5,12 +5,16 @@ export function getColorByState(state: string, options: any) {
         return options.ColorOK;
       case 'disaster-state':
         return options.ColorDisaster;
+      case 'critical-state':
+        return options.ColorCritical;
       case 'high-state':
         return options.ColorHigh;
       case 'average-state':
         return options.ColorAverage;
       case 'warning-state':
         return options.ColorWarning;
+      case 'minor-state':
+        return options.ColorMinor;
       case 'information-state':
         return options.ColorInformation;
       case 'disable-state':

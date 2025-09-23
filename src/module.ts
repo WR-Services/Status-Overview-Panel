@@ -90,6 +90,58 @@ export const plugin = new PanelPlugin<StatusOverviewOptions>(StatusOverviewPanel
       defaultValue: '',
     })
     
+    // Text Spacing Options
+    .addNumberInput({
+      path: 'titleMargin',
+      name: 'Title Margin',
+      category: ['Text Spacing'],
+      description: 'Margin below the title (px)',
+      defaultValue: 10,
+      settings: {
+        min: 0,
+        max: 50,
+        integer: true,
+      },
+    })
+    .addNumberInput({
+      path: 'lineHeight',
+      name: 'Line Height',
+      category: ['Text Spacing'],
+      description: 'Line height for metrics (em)',
+      defaultValue: 1.5,
+      settings: {
+        min: 1,
+        max: 3,
+        step: 0.1,
+      },
+    })
+    .addNumberInput({
+      path: 'textSpacing',
+      name: 'Text Spacing',
+      category: ['Text Spacing'],
+      description: 'Spacing between metric rows (px)',
+      defaultValue: 5,
+      settings: {
+        min: 0,
+        max: 20,
+        integer: true,
+      },
+      showIf: config => config.modePanel !== 'in',
+    })
+    .addNumberInput({
+      path: 'inlineSpacing',
+      name: 'Inline Spacing',
+      category: ['Text Spacing'],
+      description: 'Spacing between metrics when displayed inline (px)',
+      defaultValue: 10,
+      settings: {
+        min: 0,
+        max: 50,
+        integer: true,
+      },
+      showIf: config => config.modePanel === 'in',
+    })
+    
     // .addSelect({
     //   name: 'Stat',
     //   path: 'globalOperator',
@@ -121,6 +173,13 @@ export const plugin = new PanelPlugin<StatusOverviewOptions>(StatusOverviewPanel
       showIf: config => config.statePanel === 'enable',
     })
     .addColorPicker({
+      name: 'Minor Color (default: ' + cfg.ColorMinor + ')',
+      path: 'ColorMinor',
+      category: ['Color'],
+      defaultValue: cfg.ColorMinor,
+      showIf: config => config.statePanel === 'enable',
+    })
+    .addColorPicker({
       name: 'Warning Color (default: ' + cfg.ColorWarning + ')',
       path: 'ColorWarning',
       category: ['Color'],
@@ -139,6 +198,13 @@ export const plugin = new PanelPlugin<StatusOverviewOptions>(StatusOverviewPanel
       path: 'ColorHigh',
       category: ['Color'],
       defaultValue: cfg.ColorHigh,
+      showIf: config => config.statePanel === 'enable',
+    })
+    .addColorPicker({
+      name: 'Critical Color (default: ' + cfg.ColorCritical + ')',
+      path: 'ColorCritical',
+      category: ['Color'],
+      defaultValue: cfg.ColorCritical,
       showIf: config => config.statePanel === 'enable',
     })
     .addColorPicker({

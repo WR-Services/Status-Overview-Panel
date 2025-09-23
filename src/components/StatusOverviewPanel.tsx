@@ -31,6 +31,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
       `,
       valueMap: css`
         font-size: 0.85em;
+        line-height: ${options.lineHeight || 1.5}em;
       `,    
       bottom_section: css`
         display: flex;
@@ -49,7 +50,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
         overflow:hidden;
       `,
       h1: {
-        margin: '0px 0px 0.15em',
+        margin: `0px 0px ${options.titleMargin || 10}px`,
         fontSize: '1.4rem',
         'padding-top': '3px',
         'letter-spacing': '-0.01893em',
@@ -184,7 +185,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
             <div className={useStyles.valueMap}>
               {options.modePanel && options.modePanel === 'in' ? (
                 displayData.map((item, index) => (
-                  <span key={index}>
+                  <span key={index} style={{ marginRight: index < displayData.length - 1 ? `${options.inlineSpacing || 10}px` : '0' }}>
                     {item.tooltip ? (
                       <Tooltip content={<div style={{ whiteSpace: 'pre-wrap' }}>{item.tooltip}</div>}>
                         <span>
@@ -203,7 +204,7 @@ export const StatusOverviewPanel: React.FC<Props> = ({ options, data, width, hei
                 ))
               ) : (
                 displayData.map((item, index) => (
-                  <div key={index}>
+                  <div key={index} style={{ marginBottom: `${options.textSpacing || 5}px` }}>
                     {item.tooltip ? (
                       <Tooltip content={<div style={{ whiteSpace: 'pre-wrap' }}>{item.tooltip}</div>}>
                         <span>

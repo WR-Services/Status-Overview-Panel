@@ -4,7 +4,7 @@ import { MetricHint } from 'types';
 
 export function findWorstStatus(metricHints: MetricHint[], rules: RuleItemType[]) {
 
-  const statusOrder = ['information', 'warning', 'average', 'high', 'disaster'];
+  const statusOrder = ['information', 'minor', 'warning', 'average', 'high', 'critical', 'disaster'];
   let worstStatusIndex = -1;
   if (!rules) { return worstStatusIndex >= 0 ? statusOrder[worstStatusIndex] + '-state' : 'ok-state'; }
   for (const rule of rules) {

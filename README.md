@@ -17,6 +17,14 @@ This fork is maintained by Ferit Sari Tomé. The original plugin was created by 
 - Improved time display for time-based metrics
 - Added support for various unit formats (time, bytes, percentage, etc.)
 - Integrated formatting options directly within rule configuration
+- Added text spacing customization options:
+  - Adjustable title margin
+  - Configurable line height for metrics
+  - Customizable spacing between metric rows
+  - Control of spacing between inline metrics
+- Added additional threshold levels:
+  - Minor threshold (between Information and Warning)
+  - Critical threshold (between High and Disaster)
 
 # Preview
 ![Simple work](https://raw.githubusercontent.com/WR-Services/Status-Overview-Panel/master/img/preview_transparent.png)
@@ -55,10 +63,10 @@ For the fastest development workflow:
         - Numeric threshold
             - Display only when the threshold is reached
             - Reverse logic if you need to assign statuses from the highest metric value to the lowest
-            - 5 threshold levels; if a threshold is not necessary, it can be left empty
+            - 7 threshold levels: Information, Minor, Warning, Average, High, Critical, and Disaster (any threshold can be left empty if not needed)
         - String threshold
             - Display only when the threshold is reached
-            - 5 threshold levels; if a threshold is not necessary, it can be left empty
+            - 7 threshold levels: Information, Minor, Warning, Average, High, Critical, and Disaster (any threshold can be left empty if not needed)
         - Display only or conditional display without affecting the panel's status
             - Use conditions or not
             - Choose the condition: equal, not equal, greater than, less than, and value. Works for both numeric and string values.

@@ -12,6 +12,11 @@ export interface StatusOverviewOptions {
   dataLink: string;
   globalDecimals: number;
   globalUnitFormat: string;
+  // Text spacing options
+  titleMargin: number;
+  lineHeight: number;
+  textSpacing: number;
+  inlineSpacing: number;
 }
 
 export interface RuleConfig {

@@ -9,6 +9,8 @@ Released at 23-09-2025
 - Per-rule unit formatting options for different data types
 - Enhanced field configuration using Grafana's built-in formatting system
 - Improved time display for time-based metrics
+- Text spacing customization options (title margin, line height, text spacing, inline spacing)
+- Additional threshold levels: "Minor" (between Information and Warning) and "Critical" (between High and Disaster)
 
 ### Changed
 
