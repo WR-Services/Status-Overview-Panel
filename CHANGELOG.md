@@ -1,5 +1,20 @@
 # Changelog
 
+## [v0.0.5] (dev-release)
+
+Released at 23-09-2025
+
+### Added
+
+- Per-rule unit formatting options for different data types
+- Enhanced field configuration using Grafana's built-in formatting system
+- Improved time display for time-based metrics
+
+### Changed
+
+- Updated authorship: Now maintained by Ferit Sari Tomé
+- Original author (Krasnov Sergei) credited in documentation
+
 ## [v0.0.4] (dev-release)
 
 Released at 17-06-2023

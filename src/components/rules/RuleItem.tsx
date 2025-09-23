@@ -6,8 +6,8 @@ import React, { useState, useEffect } from 'react';
 import { IconName, Input, Select, Field, FieldSet, Switch, Card, IconButton, Cascader, TextArea, CascaderOption } from '@grafana/ui';
 import { DisplayModes, LogicalModes, RuleItemProps, RuleItemType } from './types';
 import { DataFrameToMetrics } from '../processor'
-import { SelectableValue } from '@grafana/data';
-//import { SelectableValue, FieldType } from '@grafana/data';
+import { SelectableValue, FieldType } from '@grafana/data';
+import { UnitFormatOptions } from './unitFormats';
 
 export interface MetricsModel {
   name: string;
@@ -81,15 +81,34 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
     if (props.context.data) {
       let hints: CascaderOption[] = [];
       let metricHints = new Set<string>();
+      let fieldTypeMap = new Map<string, string>();
+      
       for (const metric of props.context.data) {
         let hintsValue = DataFrameToMetrics(metric, 'last');
         for (const hintValue of hintsValue) {
-          metricHints.add(hintValue.name);          
+          metricHints.add(hintValue.name);
+          // Store field type for each metric
+          if (hintValue.fieldType) {
+            fieldTypeMap.set(hintValue.name, hintValue.fieldType);
+          }
         }  
       }
+      
       for (const metricName of metricHints) {
+        const fieldType = fieldTypeMap.get(metricName) || 'unknown';
+        // Add field type information to the label
+        let fieldTypeLabel = '';
+        
+        if (fieldType === FieldType.time) {
+          fieldTypeLabel = ' (time)';
+        } else if (fieldType === FieldType.number) {
+          fieldTypeLabel = ' (number)';
+        } else if (fieldType === FieldType.string) {
+          fieldTypeLabel = ' (string)';
+        }
+        
         hints.push({
-          label: metricName,
+          label: `${metricName}${fieldTypeLabel}`,
           value: metricName,
         });
       }
@@ -324,7 +343,43 @@ export const RuleItem: React.FC<RuleItemProps> = (props: RuleItemProps) => {
             </>
           ) : null }
  
-         
+          {/* Field Formatting Options */}
+          <Field label="Use Custom Formatting" description="Apply custom formatting to this metric" disabled={!rule.showRule}>
+            <Switch
+              transparent={true}
+              value={rule.useCustomFormatting}
+              disabled={!rule.showRule}
+              onChange={() => setRule({ ...rule, useCustomFormatting: !rule.useCustomFormatting })}
+            />
+          </Field>
+
+          {rule.useCustomFormatting ? (
+            <>
+              <Field label="Unit Format" description="Format for displaying values" disabled={!rule.showRule}>
+                <Select
+                  menuShouldPortal={true}
+                  options={UnitFormatOptions}
+                  value={UnitFormatOptions.find(option => option.value === rule.unitFormat) || UnitFormatOptions[0]}
+                  onChange={(v) => setRule({ ...rule, unitFormat: v.value })}
+                  placeholder="Select unit format"
+                />
+              </Field>
+              <Field label="Decimals" description="Number of decimal places to show" disabled={!rule.showRule}>
+                <Input
+                  value={rule.decimals !== undefined ? rule.decimals.toString() : ''}
+                  type="number"
+                  placeholder="Auto"
+                  min={0}
+                  max={20}
+                  onChange={(e) => {
+                    const value = e.currentTarget.value;
+                    const decimals = value !== '' ? parseInt(value, 10) : undefined;
+                    setRule({ ...rule, decimals: decimals });
+                  }}
+                />
+              </Field>
+            </>
+          ) : null}
 
         </FieldSet>          
       </Card.Meta>

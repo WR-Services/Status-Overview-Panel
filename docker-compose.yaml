@@ -2,7 +2,7 @@ version: '3.0'
 
 services:
   grafana:
-    container_name: 'serrrios-statusoverview-panel'
+    container_name: 'wrservices-statusoverview-panel'
     build:
       context: ./.config
       args:
@@ -10,5 +10,5 @@ services:
     ports:
       - 3000:3000/tcp
     volumes:
-      - ./dist:/var/lib/grafana/plugins/serrrios-statusoverview-panel
+      - ./dist:/var/lib/grafana/plugins/wrservices-statusoverview-panel
       - ./provisioning:/etc/grafana/provisioning

@@ -1,7 +1,7 @@
 import { compareValues } from './comparisonFunctions';
 import { findWorstStatus } from './findWorstStatus';
 import { RuleItemType } from '../components/rules/types';
-import { AppEvents } from '@grafana/data';
+import { AppEvents, getValueFormat, formattedValueToString } from '@grafana/data';
 import { getAppEvents } from '@grafana/runtime';
 import { MetricHint } from 'types';
 
@@ -73,7 +73,33 @@ export function displaySeriesData(metricHints: MetricHint[], rules: RuleItemType
                             }
                         }
                         if (rule.showName && rule.showValue) { line += `: `; }
-                        if (rule.showValue) { line += value; }
+                        if (rule.showValue) { 
+                            // Apply rule-specific formatting if custom formatting is enabled
+                            if (rule.useCustomFormatting && rule.unitFormat) {
+                                // Apply custom formatting based on rule settings
+                                try {
+                                    const formatter = getValueFormat(rule.unitFormat);
+                                    const decimals = rule.decimals !== undefined ? rule.decimals : 2;
+                                    const formatted = formatter(value, decimals);
+                                    line += formattedValueToString(formatted);
+                                } catch (error) {
+                                    console.error('Error formatting value:', error);
+                                    // Fallback to default formatting
+                                    if (series.valueFormatted) {
+                                        line += series.valueFormatted;
+                                    } else {
+                                        line += value;
+                                    }
+                                }
+                            } else {
+                                // Use standard formatted value if available
+                                if (series.valueFormatted) {
+                                    line += series.valueFormatted;
+                                } else {
+                                    line += value;
+                                }
+                            }
+                        }
                         if (rule.showName || rule.showValue) { 
                             result.push({ line, tooltip: ( rule.description ? rule.description : '') });
                         }

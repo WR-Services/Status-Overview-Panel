@@ -7,8 +7,17 @@ The main feature of the plugin is the visual representation of the component's s
 This is achieved through a large panel with the component's name, displaying all metrics or metrics that influence the status change, as well as a blinking effect when the status changes.
 Audio notifications are also planned for the future.
 
+## Maintainer
+
+This fork is maintained by Ferit Sari Tomé. The original plugin was created by Krasnov Sergei (serrrios).
+
+### Enhancements in this fork
+- Added per-rule unit formatting options for proper display of different data types
+- Enhanced field configuration to leverage Grafana's built-in formatting system
+- Improved time display for time-based metrics
+
 # Preview
-![Simple work](https://raw.githubusercontent.com/serrrios/Status-Overview-Panel/master/img/preview_transparent.png)
+![Simple work](https://raw.githubusercontent.com/WR-Services/Status-Overview-Panel/master/img/preview_transparent.png)
 
 # Main Functionality
 - General

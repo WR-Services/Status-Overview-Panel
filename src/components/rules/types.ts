@@ -54,6 +54,10 @@ export interface RuleItemType {
   alias?: string | '';
   shortAlias?: string | '';
   ID?: string;
+  // Field formatting options
+  unitFormat?: string;
+  decimals?: number;
+  useCustomFormatting?: boolean;
 }
 
 export interface RuleItemTracker {

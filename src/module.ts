@@ -1,4 +1,4 @@
-import { PanelPlugin  } from '@grafana/data';
+import { PanelPlugin } from '@grafana/data';
 import { StatusOverviewOptions } from './types';
 import { StatusOverviewPanel } from './components/StatusOverviewPanel';
 import { RuleEditor } from './components/rules/RuleEditor';

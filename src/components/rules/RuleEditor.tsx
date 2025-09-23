@@ -127,7 +127,11 @@ export const RuleEditor: React.FC<Props> = ({ context, onChange }) => {
       numberThreshold: original.numberThreshold,
       stringThreshold: original.stringThreshold,
       showOnlyOnThreshold: original.showOnlyOnThreshold,
-      revers: original.revers,      
+      revers: original.revers,
+      // Copy formatting options
+      useCustomFormatting: original.useCustomFormatting,
+      unitFormat: original.unitFormat,
+      decimals: original.decimals,      
     };
     const aTracker: RuleItemTracker = {
       rule: aRule,
@@ -209,6 +213,10 @@ export const RuleEditor: React.FC<Props> = ({ context, onChange }) => {
       description: '',
       shortAlias: '',
       seriesMatch: '',
+      // Add default formatting options
+      useCustomFormatting: false,
+      unitFormat: undefined,
+      decimals: undefined,
     };
     const aTracker: RuleItemTracker = {
       rule: aRule,

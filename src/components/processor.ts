@@ -25,11 +25,11 @@ export function ProcessDataFrames(
   }
   
   export function DataFrameToMetrics(frame: DataFrame, globalOperator: string): MetricsModel[] {
-  
+
     const valueFields: Field[] = [];
   
     for (const aField of frame.fields) {
-      if (aField.type === FieldType.number || aField.type === FieldType.string) {
+      if (aField.type === FieldType.number || aField.type === FieldType.string || aField.type === FieldType.time) {
         valueFields.push(aField);
       }
     }
@@ -45,8 +45,26 @@ export function ProcessDataFrames(
       if (valueField!.config.decimals !== undefined && valueField!.config.decimals !== null) {
         maxDecimals = valueField!.config.decimals;
       }
-      const result = getValueFormat(valueField!.config.unit)(operatorValue, maxDecimals, undefined, undefined);
-      const valueFormatted = formattedValueToString(result);
+      
+      // Use field config for formatting
+      let valueFormatted = '';
+      // Special handling for time fields
+      if (valueField!.type === FieldType.time) {
+        // Use time formatting from field config or default to ISO string
+        const timeValue = new Date(operatorValue);
+        if (valueField!.config.unit) {
+          // If unit is specified in field config, use it
+          const result = getValueFormat(valueField!.config.unit)(operatorValue, maxDecimals, undefined, undefined);
+          valueFormatted = formattedValueToString(result);
+        } else {
+          // Default time formatting if none specified
+          valueFormatted = timeValue.toISOString();
+        }
+      } else {
+        // Use standard field formatting for non-time fields
+        const result = getValueFormat(valueField!.config.unit)(operatorValue, maxDecimals, undefined, undefined);
+        valueFormatted = formattedValueToString(result);
+      }
   
       const model: MetricsModel = {
         thresholdLevel: 0,
@@ -54,8 +72,8 @@ export function ProcessDataFrames(
         valueFormatted: valueFormatted,
         valueRounded: roundValue(operatorValue, maxDecimals) || operatorValue,
         stats: standardCalcs,
-        name: valueFieldName, // aSeries.name,
-        displayName: valueFieldName, // aSeries.name,
+        name: valueFieldName,
+        displayName: valueFieldName,
         timestamp: 0,
         prefix: '',
         suffix: '',
@@ -69,6 +87,8 @@ export function ProcessDataFrames(
         showValue: true,
         isComposite: false,
         members: [],
+        // Store field type to use in rules
+        fieldType: valueField!.type,
       };
       models.push(model);
     }

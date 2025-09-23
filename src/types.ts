@@ -21,6 +21,8 @@ export interface RuleConfig {
 export interface MetricHint {
   label: string;
   value: any;
+  valueFormatted?: string;
+  fieldType?: string;
 }
 
 export interface MetricsModel {
@@ -46,6 +48,7 @@ export interface MetricsModel {
   isComposite: boolean;
   members: MetricsModel[];
   triggerCache?: any; // holds animation frame info
+  fieldType?: string; // Store the field type from Grafana
 }
 
 

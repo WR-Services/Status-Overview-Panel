@@ -2,10 +2,7 @@ import { DataFrameToMetrics } from './processor'
 import { PanelData } from '@grafana/data';
 
 
-interface MetricHint {
-    label: string;
-    value: any;
-}
+import { MetricHint } from '../types';
   
 export function getMetricHints(data: PanelData): MetricHint[] {
     const hints: MetricHint[] = [];
@@ -16,6 +13,8 @@ export function getMetricHints(data: PanelData): MetricHint[] {
         hints.push({
           label: hintValue.name,
           value: hintValue.valueRounded,
+          valueFormatted: hintValue.valueFormatted,
+          fieldType: hintValue.fieldType
         });
       }
     }
