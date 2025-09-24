@@ -1,0 +1,982 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "liveNow": true,
+    "panels": [
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 1,
+            "panels": [],
+            "title": "Windows Server",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "yPK_pg3Nz"
+            },
+            "description": "",
+            "gridPos": {
+                "h": 5,
+                "w": 2,
+                "x": 0,
+                "y": 1
+            },
+            "id": 2,
+            "maxPerRow": 12,
+            "options": {
+                "ColorAverage": "rgba(250, 100, 0, 0.99)",
+                "ColorCritical": "rgba(205, 49, 49, 0.9)",
+                "ColorDisable": "rgba(128, 128, 128, 0.9)",
+                "ColorDisaster": "rgba(196, 22, 42, 0.9)",
+                "ColorHigh": "red",
+                "ColorInformation": "rgba(138, 184, 255, 0.99)",
+                "ColorMinor": "rgba(190, 213, 255, 0.99)",
+                "ColorNa": "rgba(20, 60, 120, 0.9)",
+                "ColorOK": "rgba(55, 135, 45, 0.9)",
+                "ColorWarning": "rgba(224, 180, 0, 0.99)",
+                "blink": false,
+                "dataLink": "",
+                "inlineSpacing": 10,
+                "lineHeight": 1.5,
+                "modePanel": "line",
+                "panelName": "$WindowsServer",
+                "ruleConfig": {
+                    "animationSpeed": "1500",
+                    "enabled": true,
+                    "rule": [],
+                    "rules": [
+                        {
+                            "alias": "Available Updates",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-0",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "Updates",
+                            "numberThreshold": {
+                                "average": "4",
+                                "disaster": "6",
+                                "high": "5",
+                                "information": "1",
+                                "warning": "3"
+                            },
+                            "order": 0,
+                            "revers": false,
+                            "seriesMatch": "Updates",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-1",
+                            "logicExpress": true,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "CPU",
+                            "numberThreshold": {
+                                "average": "75",
+                                "disaster": "90",
+                                "high": "80",
+                                "information": "",
+                                "warning": "65"
+                            },
+                            "order": 1,
+                            "revers": false,
+                            "seriesMatch": "CPU Usage",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": false,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-2",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "HDD-C",
+                            "numberThreshold": {
+                                "average": "85",
+                                "disaster": "95",
+                                "high": "90",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 2,
+                            "revers": false,
+                            "seriesMatch": "HDD-C",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "HDD-C Copy",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "HDD-D",
+                            "numberThreshold": {
+                                "average": "85",
+                                "disaster": "95",
+                                "high": "90",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 3,
+                            "revers": false,
+                            "seriesMatch": "HDD-D",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "HDD-D Copy",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "HDD-E",
+                            "numberThreshold": {
+                                "average": "85",
+                                "disaster": "95",
+                                "high": "90",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 4,
+                            "revers": false,
+                            "seriesMatch": "HDD-E",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "HDD-D Copy",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "HDD-F",
+                            "numberThreshold": {
+                                "average": "85",
+                                "disaster": "95",
+                                "high": "90",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 5,
+                            "revers": false,
+                            "seriesMatch": "HDD-F",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "HDD-F Copy",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "HDD-G",
+                            "numberThreshold": {
+                                "average": "85",
+                                "disaster": "95",
+                                "high": "90",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 6,
+                            "revers": false,
+                            "seriesMatch": "HDD-G",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "HDD-F Copy",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "HDD-H",
+                            "numberThreshold": {
+                                "average": "85",
+                                "disaster": "95",
+                                "high": "90",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 7,
+                            "revers": false,
+                            "seriesMatch": "HDD-H",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "string",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-8",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "Offline",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "1",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 8,
+                            "revers": false,
+                            "seriesMatch": "Offline",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": false,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "0",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "Weeks online",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "show",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-9",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "Uptime",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 9,
+                            "revers": false,
+                            "seriesMatch": "Server Uptime (Weeks)",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": false,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-10",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "Pending Reboot",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "3",
+                                "high": "",
+                                "information": "",
+                                "warning": "1"
+                            },
+                            "order": 10,
+                            "revers": false,
+                            "seriesMatch": "Pending Reboot",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": false,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "RAM %",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-12",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "RAM",
+                            "numberThreshold": {
+                                "average": "70",
+                                "disaster": "90",
+                                "high": "80",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 11,
+                            "revers": false,
+                            "seriesMatch": "RAM",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": false,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "Old Exporter",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "show",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-13",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "ExpVer",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 12,
+                            "revers": false,
+                            "seriesMatch": "ExpVerio",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": false,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "NewExp",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "show",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-14",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "NewExp",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            },
+                            "order": 13,
+                            "revers": false,
+                            "seriesMatch": "NewExp",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": false,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-11",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "Update Task Running",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "1",
+                                "warning": ""
+                            },
+                            "order": 14,
+                            "revers": false,
+                            "seriesMatch": "Update Task Running",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        },
+                        {
+                            "alias": "Remaining Updates",
+                            "clickThrough": "",
+                            "clickThroughOpenNewTab": true,
+                            "clickThroughSanitize": true,
+                            "description": "",
+                            "displayMode": "number",
+                            "enabled": true,
+                            "isTemplated": false,
+                            "label": "Rule-16",
+                            "logicExpress": false,
+                            "logicExpressValue": "",
+                            "logicalMode": "eq",
+                            "name": "Remaining Updates",
+                            "numberThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "1",
+                                "warning": ""
+                            },
+                            "order": 15,
+                            "revers": false,
+                            "seriesMatch": "UpdateTask",
+                            "shortAlias": "",
+                            "showMembers": false,
+                            "showName": true,
+                            "showOnlyOnThreshold": true,
+                            "showRule": true,
+                            "showValue": true,
+                            "stringThreshold": {
+                                "average": "",
+                                "disaster": "",
+                                "high": "",
+                                "information": "",
+                                "warning": ""
+                            }
+                        }
+                    ]
+                },
+                "statePanel": "enable",
+                "textSpacing": 5,
+                "titleMargin": 10
+            },
+            "repeat": "WindowsServer",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "open_windows_updates{instance=~\"$WindowsServer.ad.wallinger.com:9100\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Updates",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "expr": "100 - (avg by (instance) (irate(windows_cpu_time_total{mode=\"idle\", instance=~\"$WindowsServer.ad.wallinger.com:9100\"}[1m])) * 100)",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "CPU Usage",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "up{instance=~\"$WindowsServer.ad.wallinger.com:9100\"}",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "Offline",
+                    "range": false,
+                    "refId": "I"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "100 - (windows_logical_disk_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"C:\"} / windows_logical_disk_size_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"C:\"})*100",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "HDD-C",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "100 - (windows_logical_disk_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"D:\"} / windows_logical_disk_size_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"D:\"})*100",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "HDD-D",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "100 - (windows_logical_disk_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"E:\"} / windows_logical_disk_size_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"E:\"})*100",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "HDD-E",
+                    "range": true,
+                    "refId": "E"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "100 - (windows_logical_disk_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"F:\"} / windows_logical_disk_size_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"F:\"})*100",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "HDD-F",
+                    "range": true,
+                    "refId": "F"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "100 - (windows_logical_disk_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"G:\"} / windows_logical_disk_size_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"G:\"})*100",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "HDD-G",
+                    "range": true,
+                    "refId": "G"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "100 - (windows_logical_disk_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"H:\"} / windows_logical_disk_size_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\",volume=~\"H:\"})*100",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "HDD-H",
+                    "range": true,
+                    "refId": "H"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "(\r\n  max(windows_time_current_timestamp_seconds{instance=~\"$WindowsServer.ad.wallinger.com:9100\"})\r\n  - max(windows_process_start_time_seconds_timestamp{instance=~\"$WindowsServer.ad.wallinger.com:9100\", process=\"Idle\", process_id=\"0\"})\r\n) / 604800",
+                    "format": "time_series",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "Server Uptime (Weeks)",
+                    "range": false,
+                    "refId": "J"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "pending_reboot{instance=~\"$WindowsServer.ad.wallinger.com:9100\"}",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "Pending Reboot",
+                    "range": true,
+                    "refId": "K"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "expr": "floor(\r\n  100 - (\r\n    (windows_memory_physical_free_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\"} \r\n     / windows_memory_physical_total_bytes{instance=~\"$WindowsServer.ad.wallinger.com:9100\"}) * 100\r\n  )\r\n)",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "RAM",
+                    "range": true,
+                    "refId": "M"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "windows_exporter_build_info{instance=~\"$WindowsServer.ad.wallinger.com:9100\",version=\"0.30.8\"}",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "ExpVerio",
+                    "range": false,
+                    "refId": "N"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "WUpdate_task{instance=~\"$WindowsServer.ad.wallinger.com:9100\"}",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "Update Task Running",
+                    "range": false,
+                    "refId": "L"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "WUpdate_duration_minutes{instance=~\"$WindowsServer.ad.wallinger.com:9100\"}",
+                    "hide": true,
+                    "instant": false,
+                    "legendFormat": "UpdateDuration",
+                    "range": true,
+                    "refId": "P"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "yPK_pg3Nz"
+                    },
+                    "editorMode": "code",
+                    "exemplar": true,
+                    "expr": "WUpdate_pending_count{instance=~\"$WindowsServer.ad.wallinger.com:9100\"} \r\n* \r\n(WUpdate_task{instance=~\"$WindowsServer.ad.wallinger.com:9100\"} > 0)",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "UpdateTask",
+                    "range": true,
+                    "refId": "Q"
+                }
+            ],
+            "transparent": true,
+            "type": "wrservices-statusoverview-panel"
+        }
+    ],
+    "refresh": "5s",
+    "revision": 1,
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "current": {
+                    "selected": false,
+                    "text": "All",
+                    "value": "$__all"
+                },
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "yPK_pg3Nz"
+                },
+                "definition": "label_values(instance)",
+                "hide": 2,
+                "includeAll": true,
+                "multi": false,
+                "name": "WindowsServer",
+                "options": [],
+                "query": {
+                    "query": "label_values(instance)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                },
+                "refresh": 1,
+                "regex": "/^(.*?)(\\.ad\\.wallinger\\.com)?:9100$/",
+                "skipUrlSync": false,
+                "sort": 1,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-5m",
+        "to": "now"
+    },
+    "timepicker": {
+        "hidden": true,
+        "refresh_intervals": [
+            "5s"
+        ]
+    },
+    "timezone": "browser",
+    "title": "0.0# System Status v2",
+    "uid": "b9868222-63b3-40dd-a360-d7257202a5ce",
+    "version": 6,
+    "weekStart": "monday"
+}
