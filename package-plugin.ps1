@@ -4,12 +4,30 @@
 
 # Configuration variables
 $pluginName = "wrservices-statusoverview-panel"
-$pluginVersion = "0.0.7"
 $outputFolder = "package"
+
+# Read version from package.json
+$packageJsonContent = Get-Content -Path "package.json" -Raw | ConvertFrom-Json
+$pluginVersion = $packageJsonContent.version
+
+# Verify plugin.json also has the same version
+$pluginJsonContent = Get-Content -Path "src/plugin.json" -Raw | ConvertFrom-Json
+if ($pluginJsonContent.info.version -ne $pluginVersion) {
+    Write-Host "Warning: Version mismatch between package.json ($pluginVersion) and plugin.json ($($pluginJsonContent.info.version))" -ForegroundColor Yellow
+    Write-Host "Run update-version.ps1 to synchronize all version numbers" -ForegroundColor Yellow
+}
 
 Write-Host "Starting packaging process for $pluginName v$pluginVersion..." -ForegroundColor Cyan
 
 # Step 1: Ensure we have a clean build
+Write-Host "Cleaning previous builds..." -ForegroundColor Yellow
+if (Test-Path -Path "node_modules\.cache") {
+    Remove-Item -Path "node_modules\.cache" -Recurse -Force
+}
+if (Test-Path -Path "dist") {
+    Remove-Item -Path "dist\*" -Recurse -Force
+}
+
 Write-Host "Building plugin in production mode..." -ForegroundColor Yellow
 npm run build
 
@@ -22,7 +40,8 @@ if (-Not $?) {
 if (Test-Path $outputFolder) {
     Write-Host "Cleaning existing package directory..." -ForegroundColor Yellow
     Remove-Item -Path "$outputFolder\*" -Recurse -Force
-} else {
+}
+else {
     New-Item -ItemType Directory -Path $outputFolder | Out-Null
 }
 
@@ -64,9 +83,24 @@ if (Test-Path $zipFilePath) {
     Remove-Item -Path $zipFilePath -Force
 }
 
-# Create the ZIP archive
+# Navigate to the directory containing the plugin folder (so the zip has proper structure)
+$currentLocation = Get-Location
+Set-Location $outputFolder
+
+# Create the ZIP archive with proper structure (single top-level directory)
+Write-Host "Creating properly structured ZIP file..." -ForegroundColor Yellow
+if (Test-Path -Path "$pluginName.zip") {
+    Remove-Item -Path "$pluginName.zip" -Force
+}
+
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-[System.IO.Compression.ZipFile]::CreateFromDirectory($pluginPackageDir, $zipFilePath)
+[System.IO.Compression.ZipFile]::CreateFromDirectory("$pluginName", "$pluginName.zip")
+
+# Move back to original location
+Set-Location $currentLocation
+
+# Move and rename the zip file to the desired location
+Move-Item -Path "$outputFolder\$pluginName.zip" -Destination $zipFilePath -Force
 
 # Step 7: Calculate SHA1 and MD5 checksums (Grafana only supports MD5 and SHA1)
 Write-Host "Calculating checksums..." -ForegroundColor Yellow
@@ -91,6 +125,7 @@ if (Test-Path $zipFilePath) {
     Write-Host "1. Test the packaged plugin in a clean Grafana environment" -ForegroundColor Cyan
     Write-Host "2. Submit the plugin to Grafana Plugin Catalog: https://grafana.com/grafana/plugins/submit/" -ForegroundColor Cyan
     Write-Host "3. For signing information, visit: https://grafana.com/docs/grafana/latest/developers/plugins/sign-a-plugin/" -ForegroundColor Cyan
-} else {
+}
+else {
     Write-Host "Failed to create package." -ForegroundColor Red
 }

@@ -27,9 +27,9 @@ This document explains how to package and distribute the Status Overview Panel p
 
    The script generates:
    - `package/wrservices-statusoverview-panel/` - Clean plugin files
-   - `package/wrservices-statusoverview-panel-0.0.7.zip` - ZIP archive for distribution
-   - `package/wrservices-statusoverview-panel-0.0.7.zip.md5` - MD5 checksum file
-   - `package/wrservices-statusoverview-panel-0.0.7.zip.sha1` - SHA1 checksum file
+   - `package/wrservices-statusoverview-panel-[VERSION].zip` - ZIP archive for distribution
+   - `package/wrservices-statusoverview-panel-[VERSION].zip.md5` - MD5 checksum file
+   - `package/wrservices-statusoverview-panel-[VERSION].zip.sha1` - SHA1 checksum file
 
 3. **Testing the Packaged Plugin**
 
@@ -68,4 +68,11 @@ For production builds:
 To update the version across all files:
 ```powershell
 .\update-version.ps1 -NewVersion "0.0.8" -ReleaseType "production-release"
+```
+
+After updating the version, make sure to run a clean build before packaging:
+```powershell
+npm run clean
+npm run build
+.\package-plugin.ps1
 ```

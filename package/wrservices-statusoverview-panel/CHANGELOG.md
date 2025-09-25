@@ -1,5 +1,18 @@
 # Changelog
 
+## [v0.0.8] (dev-release)
+
+Released at 25-09-2025
+
+### Added
+
+- 
+
+### Fixed
+
+- 
+
+
 ## [v0.0.7] (production-release)
 
 Released at 24-09-2025

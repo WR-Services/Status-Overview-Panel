@@ -36,7 +36,7 @@
         "path": "img/blink.gif"
       }
     ],
-    "version": "%VERSION%",
+    "version": "0.0.8",
     "updated": "%TODAY%"
   },
   "dependencies": {
