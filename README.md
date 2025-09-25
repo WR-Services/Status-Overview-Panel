@@ -38,6 +38,12 @@ This repository includes VS Code tasks for easy development:
 2. **Restart Docker**: Run the "Restart Docker" task or use `docker-compose down && docker-compose up -d`
 3. **Build and Deploy**: Run the combined "Build and Deploy" task or use the `deploy.ps1` script
 
+## Production Build
+To build the plugin for production deployment:
+1. Run `npm run build` to create an optimized production build
+2. The compiled plugin will be available in the `dist` directory
+3. Package the `dist` directory for distribution or deploy it to your Grafana plugins folder
+
 ## Quick Start
 For the fastest development workflow:
 1. Press `Ctrl+Shift+P` to open the command palette
