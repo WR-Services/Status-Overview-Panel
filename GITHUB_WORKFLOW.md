@@ -52,4 +52,4 @@ If you encounter issues with the build attestation:
 2. Verify that your API key is valid and has the correct permissions
 3. Make sure your plugin.json file has all required fields properly filled out
 
-For more information, see [Grafana's documentation on build attestation](https://grafana.com/developers/plugin-tools/publish-a-plugin/build-automation#enable-provenance-attestation).
+For more information, see [Grafana's documentation on build attestation](https://grafana.com/developers/plugin-tools/publish-a-plugin/build-automation#enable-provenance-attestation)
